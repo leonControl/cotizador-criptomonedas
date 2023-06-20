@@ -1,15 +1,23 @@
-import React from 'react'
-import styled from '@emotion/styled'
+import React from "react";
+import styled from "@emotion/styled";
 
 const Label = styled.label`
-    color: #fff
-`
+  color: #fff;
+`;
 
-const useSelectCoins = (label) => {
-
+const useSelectCoins = (label, options) => {
   const SelectCoins = () => (
     <>
-        <Label>{label}</Label>
+      <Label>{label}</Label>
+      <select>
+        <option value="">--- Seleccionar ---</option>
+
+        {options.map( opt => (
+          <option key={opt.id} value={opt.id}>
+            {opt.name}
+          </option>
+        ))}
+      </select>
     </>
   )
 
