@@ -2,6 +2,7 @@ import { useState } from 'react'
 import styled from '@emotion/styled'
 
 import CriptoImage from './img/imagen-criptos.png'
+import Form from './components/Form'
 
 const Container = styled.div`
   max-width: 900px;
@@ -22,6 +23,15 @@ const Heading = styled.h1`
   margin-top: 80px;
   margin-bottom: 50px;
   font-size: 34px;
+
+  &::after {
+    content: '';
+    width: 100px;
+    height: 6px;
+    background-color: #66a2fe;
+    display: block;
+    margin: 10px auto auto;
+  }
 `
 
 const Image = styled.img`
@@ -40,6 +50,8 @@ function App() {
     />
       <div>
         <Heading>Cotizador de criptomonedas</Heading>
+
+        <Form/>
       </div>
       
     </Container>
