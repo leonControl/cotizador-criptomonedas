@@ -1,7 +1,8 @@
-import {useEffect} from 'react'
+import {useState, useEffect} from 'react'
 import styled from '@emotion/styled'
 import useSelectCoins from '../hooks/useSelectCoins'
 import {coins} from '../data/coins'
+import Error from '../components/Error'
 
 const InputSubmit = styled.input`
     background-color: #9497ff;
@@ -24,7 +25,12 @@ const InputSubmit = styled.input`
 
 const Form = () => {
 
-    const [coin , SelectCoins] = useSelectCoins(`Elige tu moneda`, coins)
+    const [cryptos, setCryptos] = useState([])
+    // Error Form
+    const [error, setError] = useState(false)
+
+    const [coin , SelectCoin] = useSelectCoins(`Elige tu moneda`, coins)
+    const [cryptoCoin , SelectCryptoCoin] = useSelectCoins(`Elige tu criptomoneda`, cryptos)
 
     useEffect(() => {
         const consultAPI = async () => {
@@ -32,24 +38,48 @@ const Form = () => {
 
             const answer = await fetch(url)
             const result = await answer.json()
-            console.log(answer)
-            console.log(result.Data)
+            
+            const arrayCryptos = result.Data.map( crypto => {
+                const coinObject = {
+                    id: crypto.CoinInfo.Internal,
+                    name : crypto.CoinInfo.FullName
+                }
+
+                return coinObject
+            })
+
+            setCryptos(arrayCryptos)
         }
 
         consultAPI()
     }, [])
 
-    return (
-        <form>
-            <SelectCoins/>
-
-            {coin}
+    const handleSubmit = e => {
+        e.preventDefault()
         
-            <InputSubmit 
-                type="submit" 
-                value='Cotizar'
-            />
-        </form>
+        if([coin, cryptoCoin].includes('')){
+            console.log('Error')
+            setError(true)
+            return
+        }
+        setError(false)
+        
+    }
+
+    return (
+        <>
+            {error && <Error>Todos los campos son obligatorios</Error>}
+            <form
+                onSubmit = {handleSubmit}
+            >
+                <SelectCoin/>
+                <SelectCryptoCoin/>
+                <InputSubmit 
+                    type="submit" 
+                    value='Cotizar'
+                />
+            </form>
+        </>    
     )
 }
 
