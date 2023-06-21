@@ -7,7 +7,7 @@ const Label = styled.label`
   font-family: 'Lato', sans-serif;
   font-size: 24px;
   font-weight: 700;
-  margin: 15px 0
+  margin: 15px 0;
 `
 
 const Select = styled.select`
@@ -26,8 +26,8 @@ const useSelectCoins = (label, options) => {
         <>
         <Label>{label}</Label>
         <Select
-            value={state}
-            onChange={ e => setState(e.target.value) }
+            value = {state}
+            onChange = { e => setState(e.target.value) }
         >
             <option value="">--- Seleccionar ---</option>
 
@@ -40,7 +40,7 @@ const useSelectCoins = (label, options) => {
         </>
     )
 
-    return [SelectCoins]
+    return [state, SelectCoins]
 }
 
 export default useSelectCoins
